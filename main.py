@@ -16,7 +16,7 @@ Options:
 1. Add tickets to total tickets
 2. Remove tickets from total tickets
 3. Check attendees
-4. Add a name to attendees
+4. Add a name to attendees and what type of ticket they have
 5. Check ticket sales
 6. Check ticket profits
 
