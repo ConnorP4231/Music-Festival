@@ -39,12 +39,19 @@ def search_setup(artist_list, schedule, attendee_list):
     if search_category == 1:
         output += search(artist_list, "artists", searched_word)
     elif search_category == 2:
-        search(artist_list, "songs", searched_word)
+        output += search(artist_list, "songs", searched_word)
     elif search_category == 3:
-        search(artist_list, "genres", searched_word)
+        output += search(artist_list, "genres", searched_word)
     elif search_category == 4:
-        search(schedule, "schedule", searched_word)
+        output += search(schedule, "schedule", searched_word)
     elif search_category == 5:
-        search(attendee_list, "attendees", searched_word)
+        output += search(attendee_list, "attendees", searched_word)
     elif search_category == 6:
-        search(artist_list, "artists", searched_word)
+        output += search(artist_list, "artists", searched_word)
+        output += f"\n{search(artist_list, "songs", searched_word)}"
+        output += f"\n{search(artist_list, "genres", searched_word)}"
+        output += f"\n{search(schedule, "schedule", searched_word)}"
+        output += f"\n{search(attendee_list, "attendees", searched_word)}"
+
+    return output
+
