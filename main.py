@@ -15,6 +15,8 @@ def search(category, category_name, word):
 #function to gather information for searching
 def search_setup(venues, attendee_list):
 
+    #clear the screen
+    print("\033c",end="")
     #stupid proof while loop and try/except
     while True:
         try:
@@ -61,4 +63,5 @@ attendee_names = ["person AA", "person BB", "person CC"]
 while True:
     #when run:
     print(search_setup(venues, attendee_names))
+    input()
 
