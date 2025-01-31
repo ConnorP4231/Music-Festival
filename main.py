@@ -127,11 +127,11 @@ def main():
     venues = {}
     time_slot_list = ("10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00")
 
+    print("Welcome to Venue management\nPlease select action")
     while True:
-        print("Welcome to Venue management\nPlease select action")
         print(f"1) Create Venue\n2) Remove Venue\n3) Modified specfic venue\n4) Exit")
 
-        choice = input("Choose action to perform\n >>")
+        choice = input("Choose action to perform\n>>> ")
 
         match choice:
             case '1':
@@ -152,9 +152,10 @@ def main():
                 while True:
                     if not venues:
                         print("You don't have any venue yet\nPlease create venue")
+                        break
                     else:
 
-                        display_venues()
+                        display_venues(venues)
 
                         venue = input("Enter venue to modified\n>>> ")
 
@@ -195,7 +196,8 @@ def main():
                                                     venue_name = input("Enter venue name: ")
                                                     stage_name = input("Enter stage name: ")
                                                     equipment_item = input("Enter equipment item: ")
-                                                
+                                                    equipment_items = equipment_item.split()
+                                                    change_equipment(venues, venue, stage_name, equipment_items)
                                                 case '5':
                                                     break
 
@@ -245,3 +247,6 @@ def main():
                         else:
                             print("Venue doesn't exist")
                             break
+
+if __name__ == "__main__":
+    main()
