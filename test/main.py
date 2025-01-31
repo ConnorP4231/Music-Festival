@@ -1,29 +1,15 @@
-# Connor Pavicic, Attendee and Ticket Sales management
-
-tickets = 0
-profit = 0
-attendees = 0
-one_day = 0
-three_day = 0
-one_day_VIP = 0
-three_day_VIP = 0
-attendee_names = []
-
-def management(tickets = tickets, profit = profit, attendees = attendees, one_day = one_day, three_day = three_day, one_day_VIP = one_day_VIP, three_day_VIP = three_day_VIP, attendee_names = attendee_names):
+def management(tickets, profit, attendees, one_day, three_day, one_day_VIP, three_day_VIP, attendee_names):
     end_function = False
-    while end_function == False:
+    while not end_function:
         choice = input("""
 Options:
-
 1. Add tickets to total tickets
 2. Remove tickets from total tickets
-3. Check attendees
-4. Add a name to attendees and what type of ticket they have
-5. Check ticket sales
-6. Check ticket profits
+3. View current ticket stats
+4. Exit
 
-Answer (1, 2, 3, 4, 5): """)
-        
+Answer (1, 2, 3, 4): """)
+
         if choice == '1':
             typetickets = input("What type of tickets did you sell? (1: 1-day, 2: 3-day, 3: 1-day VIP, 4: 3-day VIP): ")
             try:
@@ -53,8 +39,8 @@ Answer (1, 2, 3, 4, 5): """)
 
             except ValueError:
                 print('Type a valid number.')
-        
-        elif choice == '2':  # REMOVING TICKETS
+
+        elif choice == '2':
             typetickets = input("What type of tickets do you want to subtract? (1: 1-day, 2: 3-day, 3: 1-day VIP, 4: 3-day VIP): ")
             try:
                 cost_remove = int(input('How much does one ticket cost?: '))
@@ -86,6 +72,42 @@ Answer (1, 2, 3, 4, 5): """)
 
             except ValueError:
                 print('Type a valid number.')
-                    
 
-management()
+        elif choice == '3':
+            print("\nCurrent Ticket Stats:")
+            print(f"Total Tickets Sold: {one_day + three_day + one_day_VIP + three_day_VIP}")
+            print(f"1-day Tickets: {one_day}")
+            print(f"3-day Tickets: {three_day}")
+            print(f"1-day VIP Tickets: {one_day_VIP}")
+            print(f"3-day VIP Tickets: {three_day_VIP}")
+            print(f"Total Profit: ${profit}\n")
+
+        elif choice == '4':
+            print("Exiting...\nFinal Stats:")
+            print(f"Total Tickets Sold: {one_day + three_day + one_day_VIP + three_day_VIP}")
+            print(f"1-day Tickets: {one_day}")
+            print(f"3-day Tickets: {three_day}")
+            print(f"1-day VIP Tickets: {one_day_VIP}")
+            print(f"3-day VIP Tickets: {three_day_VIP}")
+            print(f"Total Profit: ${profit}")
+            end_function = True
+        else:
+            print('Invalid option, try again.')
+
+    return tickets, profit, attendees, one_day, three_day, one_day_VIP, three_day_VIP, attendee_names
+
+
+# Initialize values
+tickets = 0
+profit = 0
+attendees = 0
+one_day = 0
+three_day = 0
+one_day_VIP = 0
+three_day_VIP = 0
+attendee_names = []
+
+# Run the function
+tickets, profit, attendees, one_day, three_day, one_day_VIP, three_day_VIP, attendee_names = management(
+    tickets, profit, attendees, one_day, three_day, one_day_VIP, three_day_VIP, attendee_names
+)
