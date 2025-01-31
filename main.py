@@ -66,6 +66,7 @@ def assign_artist_schedule(time_slot_list: tuple, schedule: dict, venue_name: st
                 return False
             else:
                 schedule[venue_name][stage_name].append((time_slot, artist_name))
+                print(f"Successfully add artiist {artist_name} in time {time_slot}")
                 return True
     else:
         print("Error: Venue or stage does not exist")
@@ -113,6 +114,11 @@ def display_schedule(time_slot_list: tuple, schedule: dict):
                         else:
                             print("NONE")
 
+def display_stage(venues: dict, venue: str):
+    print("stage : ")
+    for stage in venues[venue].keys():
+        print(f"{stage}")
+
 def display_venues(venues: dict):
     for venue in venues.keys():
         print(f"Venue | {venue}:")
@@ -139,7 +145,7 @@ def main():
 
     print("Welcome to Venue management\nPlease select action")
     while True:
-        print(f"\n1) Create Venue\n2) Remove Venue\n3) Modified specfic venue\n4) Display venues\n5) Exit")
+        print(f"\n1) Create Venue\n2) Remove Venue\n3) Modified specfic venue\n4) Display venues\n5) Display schedule \n6) Exit")
 
         choice = input("Choose action to perform\n>>> ")
 
@@ -154,14 +160,17 @@ def main():
                     print("\nYou don't have any venue yet\nPlease create venue")
                 else:
                     venue_name = input("Enter venue name: ")
-                    if not remove_venue(schedule, venues, venue_name):
-                        print("Venue removed successfully")
+                    remove_venue(schedule, venues, venue_name)
 
             case '4':
                 # Show venue
                 show_venues(venues)
 
             case '5':
+                #Display schedule
+                display_schedule(time_slot_list, schedule)
+
+            case '6':
                 # Exit
                 break
 
@@ -173,7 +182,7 @@ def main():
                         break
                     else:
 
-                        display_venues(venues)
+                        show_venues(venues)
 
                         venue = input("Enter venue to modified\n>>> ")
 
@@ -190,7 +199,7 @@ def main():
                                     case '1':
                                         while True:
                                             print("\nModify stage")
-                                            print(f"1) Add Stage\n2) Remove Stage\n3) Change Stage location\n4) Change Stage equipment\n5) Go Back")
+                                            print(f"1) Add Stage\n2) Remove Stage\n3) Change Stage location\n4) Change Stage equipment\n5) display venue + stage\n6) Go Back")
                                             act = input(">>> ")
                                             match act:
                                                 case '1':
@@ -200,24 +209,34 @@ def main():
                                                     add_stage(schedule, venues, venue, stage_name, location)
 
                                                 case '2':
+                                                    display_stage(venues, venue)
                                                     stage_name = input("Enter stage name: ")
                                                     remove_stage(schedule, venues, venue, stage_name)
 
                                                 case '3':
                                                     #change stage location
+                                                    display_stage(venues, venue)
                                                     stage_name = input("Enter stage name: ")
                                                     location = input("Enter location: ")
                                                     change_location(venues, venue, stage_name, location)
 
                                                 case '4':
                                                     #change stage equipment
-                                                    venue_name = input("Enter venue name: ")
+                                                    display_stage(venues, venue)
                                                     stage_name = input("Enter stage name: ")
                                                     equipment_item = input("Enter equipment item: ")
                                                     equipment_items = equipment_item.split()
                                                     change_equipment(venues, venue, stage_name, equipment_items)
+
                                                 case '5':
+                                                    #display venues
+                                                    display_venues(venues)
+
+                                                case '6':
                                                     break
+
+                                                case _:
+                                                    print("Invalid Choice") 
 
                                     case '2':
                                         #Modify Schedule
@@ -229,28 +248,30 @@ def main():
 
                                             match act:
                                                 case '1':
-                                                    display_schedule(schedule)
+                                                    display_schedule(time_slot_list, schedule)
 
                                                 case '2':
                                                     #Assign Artist
+                                                    display_stage(venues, venue)
                                                     stage_name = input("Enter stage name: ")
                                                     for time in time_slot_list:
-                                                        print(f"| {time}", end="")
-                                                    time_slot = input("Enter time slot: ")
+                                                        print(f"| {time} ", end="")
+                                                    time_slot = input("\nEnter time slot: ")
                                                     artist_name = input("Enter artist name: ")
 
                                                     assign_artist_schedule(time_slot_list, schedule, venue, stage_name, time_slot, artist_name)
 
                                                 case '3':
                                                     #Remove Time Slot
-                                                    venue_name = input("Enter venue name: ")
+                                                    display_stage(venues, venue)
                                                     stage_name = input("Enter stage name: ")
                                                     time_slot = input("Enter time slot to remove: ")
 
-                                                    remove_time_slot(schedule, venue_name, stage_name, time_slot)
+                                                    remove_time_slot(schedule, venue, stage_name, time_slot)
                                                     
                                                 case '4':
                                                     #Change Artist
+                                                    display_stage(venues, venue)
                                                     stage_name = input("Enter stage name: ")
                                                     time_slot = input("Enter time slot: ")
                                                     artist_name = input("Enter new artist name: ")      
