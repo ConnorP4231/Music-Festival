@@ -6,26 +6,24 @@
 def search(category, category_name, word):
     output = f"\nitems in {category_name} category with {word} in them:"
     for i in category:
-        if word in i:
+        if word.strip().lower() in i.lower():
             output += f"\n{i}"
 
     return output
 
 
 #function to gather information for searching
-def search_setup(artist_list, schedule, attendee_list):
+def search_setup(venues, attendee_list):
 
     #stupid proof while loop and try/except
     while True:
         try:
             #user input for category they are searching in, being artists, songs, song genres, song times, and attendees
             search_category = int(input("""\nwhat category would you like to search in? Type:
-  1 to search artists
-  2 to search songs
-  3 to search song genres
-  4 to search for a time
-  5 to search for attendees
-  6 to search all
+  1 to search venues
+  2 to search for attendees
+  3 to search all
+  (other things will be added once I know how to add them)
   Your input here: """))
             break #only exits loop when a value that works is inputted
         except ValueError:
@@ -37,21 +35,30 @@ def search_setup(artist_list, schedule, attendee_list):
     #actually search
     output = ""
     if search_category == 1:
-        output += search(artist_list, "artists", searched_word)
+#        output += search(artist_list, "artists", searched_word)
+#    elif search_category == 2:
+#        output += search(artist_list, "songs", searched_word)
+#    elif search_category == 3:
+#        output += search(artist_list, "genres", searched_word)
+#    elif search_category == 4:
+        output += search(venues, "venues", searched_word)
     elif search_category == 2:
-        output += search(artist_list, "songs", searched_word)
-    elif search_category == 3:
-        output += search(artist_list, "genres", searched_word)
-    elif search_category == 4:
-        output += search(schedule, "schedule", searched_word)
-    elif search_category == 5:
         output += search(attendee_list, "attendees", searched_word)
-    elif search_category == 6:
-        output += search(artist_list, "artists", searched_word)
-        output += f"\n{search(artist_list, "songs", searched_word)}"
-        output += f"\n{search(artist_list, "genres", searched_word)}"
-        output += f"\n{search(schedule, "schedule", searched_word)}"
+    elif search_category == 3:
+#        output += search(artist_list, "artists", searched_word)
+#        output += f"\n{search(artist_list, "songs", searched_word)}"
+#        output += f"\n{search(artist_list, "genres", searched_word)}"
+        output += f"\n{search(venues, "venues", searched_word)}"
         output += f"\n{search(attendee_list, "attendees", searched_word)}"
+    else:
+        output += "\ninvalid input"
 
     return output
+
+#temporary stuff for testing
+venues = {"place AA", "place BB", "place CC"}
+attendee_names = ["person AA", "person BB", "person CC"]
+while True:
+    #when run:
+    print(search_setup(venues, attendee_names))
 
