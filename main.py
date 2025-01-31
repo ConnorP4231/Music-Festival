@@ -121,6 +121,16 @@ def display_venues(venues: dict):
             print(f"      Location: {venues[venue][stage]['location']}")
             print(f"      Equipment: {', '.join(venues[venue][stage]['equipment']) if venues[venue][stage]['equipment'] else 'None'}")
 
+def show_venues(venues: dict):
+    print("")
+    if not venues:
+        print("You don't have any venue yet")
+        return False
+    else:
+        for venue in venues.keys():
+            print(f"{venue}")
+        return True
+
 def main():
 
     schedule = {}
@@ -129,29 +139,37 @@ def main():
 
     print("Welcome to Venue management\nPlease select action")
     while True:
-        print(f"1) Create Venue\n2) Remove Venue\n3) Modified specfic venue\n4) Exit")
+        print(f"\n1) Create Venue\n2) Remove Venue\n3) Modified specfic venue\n4) Display venues\n5) Exit")
 
         choice = input("Choose action to perform\n>>> ")
 
         match choice:
             case '1':
+                # Add venue
                 venue_name = input("Enter venue name: ")
                 add_venue(schedule, venues, venue_name)
             case '2':
+                # Remove venue
                 if not venues:
-                    print("You don't have any venue yet\nPlease create venue")
+                    print("\nYou don't have any venue yet\nPlease create venue")
                 else:
                     venue_name = input("Enter venue name: ")
                     if not remove_venue(schedule, venues, venue_name):
                         print("Venue removed successfully")
 
             case '4':
+                # Show venue
+                show_venues(venues)
+
+            case '5':
+                # Exit
                 break
 
             case '3':
+                #Modify specific venue
                 while True:
                     if not venues:
-                        print("You don't have any venue yet\nPlease create venue")
+                        print("\nYou don't have any venue yet\nPlease create venue")
                         break
                     else:
 
@@ -162,7 +180,7 @@ def main():
                         if venue in venues:
                             while True:
 
-                                print(f"You are now modifying {venue}")
+                                print(f"\nYou are now modifying {venue}")
                                 print("Please selection action")
                                 print(f"1) Modify stage\n2) Modify Schedule\n3) Go Back")
 
@@ -171,7 +189,7 @@ def main():
                                 match action:
                                     case '1':
                                         while True:
-                                            print("Modify stage")
+                                            print("\nModify stage")
                                             print(f"1) Add Stage\n2) Remove Stage\n3) Change Stage location\n4) Change Stage equipment\n5) Go Back")
                                             act = input(">>> ")
                                             match act:
@@ -204,7 +222,7 @@ def main():
                                     case '2':
                                         #Modify Schedule
                                         while True:
-                                            print("Modify Schedule")
+                                            print("\nModify Schedule")
                                             print(f"1) Display schedule\n2) Assign Artist\n3) Remove time slot\n4) Change Artist\n5) Go Back")
 
                                             act = input(">>> ")
@@ -240,13 +258,21 @@ def main():
                                                     change_artist(schedule, venue, stage_name, time_slot, artist_name)                
 
                                                 case '5':
-                                                    break    
+                                                    break   
+                                                case _:
+                                                    print("Invalid Choice") 
 
                                     case '3':
-                                        break       
+                                        break   
+                                    case _:
+                                        print("Invalid Choice")
+                                        continue    
                         else:
-                            print("Venue doesn't exist")
+                            print("\nVenue doesn't exist")
                             break
+            case _:
+                print("\nInvalid Choice")
+                continue
 
 if __name__ == "__main__":
     main()
