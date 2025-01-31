@@ -136,4 +136,6 @@ Answer (1-7): """)
 
         else: # Idiot proof
             print("Invalid option. Please enter a number between 1 and 7.")
+
+
 profit, attendees, one_day, three_day, one_day_VIP, three_day_VIP, attendee_names = management(profit, attendees, one_day, three_day, one_day_VIP, three_day_VIP, attendee_names)
