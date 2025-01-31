@@ -26,13 +26,19 @@ def search_setup(venues, attendee_list):
   2 to search for attendees
   3 to search all
   (other things will be added once I know how to add them)
-  Your input here: """))
-            break #only exits loop when a value that works is inputted
+  Your input here (number from one to three): """))
+            #possible inputs list for small bug solve
+            possible_inputs = [1,2,3]
+            #conditional to only let the user input valid inputs
+            if search_category in possible_inputs:
+                break #only exits loop when a value that works is inputted
+            
         except ValueError:
             print("\ninvalid input")
 
+
     #user input for word or phrase to search for
-    searched_word = input("\nwhat would you like to search for? (word, phrase, or number) ")
+    searched_word = input("\nwhat would you like to search for? (type a word, phrase, letter, or number, will display everything with that in it) ")
 
     #actually search
     output = ""
@@ -58,8 +64,8 @@ def search_setup(venues, attendee_list):
     return output
 
 #temporary stuff for testing
-venues = {"place AA", "place BB", "place CC"}
-attendee_names = ["person AA", "person BB", "person CC"]
+venues = {"place AA", "place BB", "place CC", "food", "pqfjaifhoalkjfhkjalfh"}
+attendee_names = ["person AA", "person BB", "person CC", "banana", "afoiphvoiafn"]
 while True:
     #when run:
     print(search_setup(venues, attendee_names))
