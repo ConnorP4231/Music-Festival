@@ -1,91 +1,140 @@
-# Connor Pavicic, Attendee and Ticket Sales management
+def management():
+    tickets = 0
+    profit = 0
+    attendees = 0
+    one_day = 0
+    three_day = 0
+    one_day_VIP = 0
+    three_day_VIP = 0
+    attendee_names = []
 
-tickets = 0
-profit = 0
-attendees = 0
-one_day = 0
-three_day = 0
-one_day_VIP = 0
-three_day_VIP = 0
-attendee_names = []
-
-def management(tickets = tickets, profit = profit, attendees = attendees, one_day = one_day, three_day = three_day, one_day_VIP = one_day_VIP, three_day_VIP = three_day_VIP, attendee_names = attendee_names):
-    end_function = False
-    while end_function == False:
+    while True:
         choice = input("""
 Options:
-
 1. Add tickets to total tickets
 2. Remove tickets from total tickets
 3. Check attendees
 4. Add a name to attendees and what type of ticket they have
 5. Check ticket sales
 6. Check ticket profits
+7. Exit
 
-Answer (1, 2, 3, 4, 5): """)
-        
-        if choice == '1':
-            typetickets = input("What type of tickets did you sell? (1: 1-day, 2: 3-day, 3: 1-day VIP, 4: 3-day VIP): ")
-            try:
-                cost = int(input('How much does one ticket cost?: '))
-                num_tickets = int(input('How many did you sell?: '))
+Answer (1-7): """)
 
-                if num_tickets < 0 or cost < 0:
-                    print('Invalid input. Numbers must be positive.')
-                    continue
+        if choice == '1':  # Adding tickets
+            while True:
+                try:
+                    typetickets = int(input("What type of tickets? (1: 1-day, 2: 3-day, 3: 1-day VIP, 4: 3-day VIP): "))
+                    if typetickets not in [1, 2, 3, 4]:
+                        raise ValueError
+                    break
+                except ValueError:
+                    print("Invalid input. Please enter 1, 2, 3, or 4.")
 
-                money = cost * num_tickets
-                profit += money
+            while True:
+                try:
+                    cost = int(input("How much does one ticket cost?: "))
+                    num_tickets = int(input("How many tickets did you sell?: "))
+                    if cost < 0 or num_tickets < 0:
+                        print("Invalid input. Values must be positive.")
+                        continue
+                    break
+                except ValueError:
+                    print("Please enter valid numbers.")
 
-                if typetickets == '1':
-                    one_day += num_tickets
-                elif typetickets == '2':
-                    three_day += num_tickets
-                elif typetickets == '3':
-                    one_day_VIP += num_tickets
-                elif typetickets == '4':
-                    three_day_VIP += num_tickets
-                else:
-                    print('Invalid ticket type.')
-                    continue
+            profit += cost * num_tickets
+            if typetickets == 1:
+                one_day += num_tickets
+            elif typetickets == 2:
+                three_day += num_tickets
+            elif typetickets == 3:
+                one_day_VIP += num_tickets
+            elif typetickets == 4:
+                three_day_VIP += num_tickets
 
-                print(f'Addition Successful! (You made ${money}).')
+            print(f'Addition Successful! (You made ${cost * num_tickets}).')
 
-            except ValueError:
-                print('Type a valid number.')
-        
-        elif choice == '2':  # REMOVING TICKETS
-            typetickets = input("What type of tickets do you want to subtract? (1: 1-day, 2: 3-day, 3: 1-day VIP, 4: 3-day VIP): ")
-            try:
-                cost_remove = int(input('How much does one ticket cost?: '))
-                num_tickets_remove = int(input('How many do you want to refund?: '))
+        elif choice == '2':  # Removing (refunding) tickets
+            while True:
+                try:
+                    typetickets = int(input("What type of tickets to refund? (1: 1-day, 2: 3-day, 3: 1-day VIP, 4: 3-day VIP): "))
+                    if typetickets not in [1, 2, 3, 4]:
+                        raise ValueError
+                    break
+                except ValueError:
+                    print("Invalid input. Please enter 1, 2, 3, or 4.")
 
-                if num_tickets_remove < 0 or cost_remove < 0:
-                    print('Invalid input. Numbers must be positive.')
-                    continue
+            while True:
+                try:
+                    cost_remove = int(input("How much does one ticket cost?: "))
+                    num_tickets_remove = int(input("How many tickets to refund?: "))
+                    if cost_remove < 0 or num_tickets_remove < 0:
+                        print("Invalid input. Values must be positive.")
+                        continue
+                    break
+                except ValueError:
+                    print("Please enter valid numbers.")
 
-                refund_amount = cost_remove * num_tickets_remove
-                if refund_amount > profit:
-                    print(f'Not enough money to refund ${refund_amount}.')
-                    continue
+            refund_amount = cost_remove * num_tickets_remove
+            if refund_amount > profit:
+                print(f"Not enough money to refund ${refund_amount}.")
+                continue
 
-                if typetickets == '1' and num_tickets_remove <= one_day:
-                    one_day -= num_tickets_remove
-                elif typetickets == '2' and num_tickets_remove <= three_day:
-                    three_day -= num_tickets_remove
-                elif typetickets == '3' and num_tickets_remove <= one_day_VIP:
-                    one_day_VIP -= num_tickets_remove
-                elif typetickets == '4' and num_tickets_remove <= three_day_VIP:
-                    three_day_VIP -= num_tickets_remove
-                else:
-                    print('Not enough tickets to refund or invalid ticket type.')
-                    continue
+            ticket_types = {1: one_day, 2: three_day, 3: one_day_VIP, 4: three_day_VIP}
+            if num_tickets_remove > ticket_types[typetickets]:
+                print("Not enough tickets to refund.")
+                continue
 
-                profit -= refund_amount
-                print('Subtraction Successful!')
+            # Deduct refunded tickets and update profit
+            if typetickets == 1:
+                one_day -= num_tickets_remove
+            elif typetickets == 2:
+                three_day -= num_tickets_remove
+            elif typetickets == 3:
+                one_day_VIP -= num_tickets_remove
+            elif typetickets == 4:
+                three_day_VIP -= num_tickets_remove
 
-            except ValueError:
-                print('Type a valid number.')
-                    
+            profit -= refund_amount
+            print("Refund Successful!")
+
+        elif choice == '3':  # Check attendees
+            print(f"Total attendees: {attendees}")
+            if attendee_names:
+                print("Attendee List:", ', '.join(attendee_names))
+            else:
+                print("No attendees yet.")
+
+        elif choice == '4':  # Add attendee
+            name = input("Enter attendee name: ").strip()
+            if not name:
+                print("Name cannot be empty.")
+                continue
+
+            while True:
+                try:
+                    ticket_type = int(input("Ticket Type (1: 1-day, 2: 3-day, 3: 1-day VIP, 4: 3-day VIP): "))
+                    if ticket_type not in [1, 2, 3, 4]:
+                        raise ValueError
+                    break
+                except ValueError:
+                    print("Invalid input. Enter 1, 2, 3, or 4.")
+
+            attendee_names.append(name)
+            attendees += 1
+            print(f"{name} added successfully!")
+
+        elif choice == '5':  # Check ticket sales
+            print(f"Ticket Sales Summary:\n1-day: {one_day}\n3-day: {three_day}\n1-day VIP: {one_day_VIP}\n3-day VIP: {three_day_VIP}")
+
+        elif choice == '6':  # Check profits
+            print(f"Total Profit: ${profit}")
+
+        elif choice == '7':  # Exit
+            print("Exiting program. Goodbye!")
+            break
+
+        else:
+            print("Invalid option. Please enter a number between 1 and 7.")
 
 management()
