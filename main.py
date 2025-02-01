@@ -13,7 +13,7 @@ def search(category, category_name, word):
 
 
 #function to gather information for searching
-def search_setup(venues, attendee_list):
+def search_setup(venues, attendee_list, artists):
 
     #clear the screen
     print("\033c",end="")
@@ -22,9 +22,10 @@ def search_setup(venues, attendee_list):
         try:
             #user input for category they are searching in, being artists, songs, song genres, song times, and attendees
             search_category = int(input("""\nwhat category would you like to search in? Type:
-  1 to search venues
-  2 to search for attendees
-  3 to search all
+  1 to search artists
+  2 to search venues
+  3 to search for attendees
+  4 to search all
   (other things will be added once I know how to add them)
   Your input here (number from one to three): """))
             #possible inputs list for small bug solve
@@ -43,19 +44,13 @@ def search_setup(venues, attendee_list):
     #actually search
     output = ""
     if search_category == 1:
-#        output += search(artist_list, "artists", searched_word)
-#    elif search_category == 2:
-#        output += search(artist_list, "songs", searched_word)
-#    elif search_category == 3:
-#        output += search(artist_list, "genres", searched_word)
-#    elif search_category == 4:
+        output += search(artists, "artists", searched_word)
+    elif search_category == 2:
         output += search(venues, "venues", searched_word)
     elif search_category == 2:
         output += search(attendee_list, "attendees", searched_word)
     elif search_category == 3:
-#        output += search(artist_list, "artists", searched_word)
-#        output += f"\n{search(artist_list, "songs", searched_word)}"
-#        output += f"\n{search(artist_list, "genres", searched_word)}"
+        output += search(artists, "artists", searched_word)
         output += f"\n{search(venues, "venues", searched_word)}"
         output += f"\n{search(attendee_list, "attendees", searched_word)}"
     else:
@@ -63,11 +58,8 @@ def search_setup(venues, attendee_list):
 
     return output
 
-#temporary stuff for testing
-venues = {"place AA", "place BB", "place CC", "food", "pqfjaifhoalkjfhkjalfh"}
-attendee_names = ["person AA", "person BB", "person CC", "banana", "afoiphvoiafn"]
-while True:
-    #when run:
-    print(search_setup(venues, attendee_names))
-    input()
+
+
+print(search_setup(venues, attendee_names, self.artists))
+
 
